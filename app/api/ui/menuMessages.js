@@ -104,8 +104,13 @@ export default defineMessages({
     id: `${scope}.sub_menu_2`,
     defaultMessage: 'Sub Menu 2',
   },
-  mongnaja: {
-    id: `${scope}.mongnaja`,
-    defaultMessage: 'lnwmong',
+  /* 2Fast Scope */
+  yourwork: {
+    id: `${scope}.yourwork`,
+    defaultMessage: 'Your Work',
+  },
+  recent_work: {
+    id: `${scope}.recent_work`,
+    defaultMessage: 'Recent Work',
   },
 });
