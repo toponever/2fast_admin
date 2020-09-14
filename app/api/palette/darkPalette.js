@@ -111,6 +111,7 @@ const darkPalette = {
       },
     },
   },
+  // 2Fast palette
   lightBlueTheme: {
     palette: {
       primary: {
@@ -120,9 +121,9 @@ const darkPalette = {
         contrastText: '#fff',
       },
       secondary: {
-        light: '#e0f7fa',
-        main: '#00bcd4',
-        dark: '#00838f',
+        light: '#4dabf5',
+        main: '#2196f3',
+        dark: '#1769aa',
         contrastText: '#fff',
       },
     },

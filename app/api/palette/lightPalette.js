@@ -111,18 +111,19 @@ const lightPalette = {
       },
     },
   },
+  // 2Fast palette
   lightBlueTheme: {
     palette: {
       primary: {
-        light: '#b3e5fc',
-        main: '#03a9f4',
-        dark: '#0277bd',
+        light: '#ffffff',
+        main: '#2196f3',
+        dark: '#4dabf5',
         contrastText: '#fff',
       },
       secondary: {
-        light: '#80deea',
-        main: '#00bcd4',
-        dark: '#00838f',
+        light: '#4dabf5',
+        main: '#2196f3',
+        dark: '#1769aa',
         contrastText: '#fff',
       },
     },

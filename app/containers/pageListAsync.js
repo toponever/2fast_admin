@@ -65,3 +65,8 @@ export const NotFoundDedicated = Loadable({
   loader: () => import('./Pages/Standalone/NotFoundDedicated'),
   loading: Loading,
 });
+/* ------ 2Fast page ------- */
+export const CreateUser = Loadable({
+  loader: () => import('./Users/CreateUser/CreateUser'),
+  loading: Loading,
+});

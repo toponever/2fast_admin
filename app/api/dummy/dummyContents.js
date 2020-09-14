@@ -1,8 +1,12 @@
+import profImg from '../images/profile-panu.png';
+
 const dummyContents = {
   user: {
-    name: 'John Doe',
+    name: 'Panudet',
     title: 'Administrator',
-    avatar: '/images/avatars/pp_boy4.jpg',
+    // avatar: '/images/avatars/pp_girl2.svg',
+    avatar: profImg,
+    // imgProfile: '/images/avatars/pp_girl4.svg',
     status: 'online'
   },
   text: {

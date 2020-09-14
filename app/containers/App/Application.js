@@ -9,7 +9,8 @@ import {
   NotFound,
   Form,
   Table,
-  Parent
+  Parent,
+  CreateUser,
 } from '../pageListAsync';
 
 class Application extends React.Component {
@@ -19,7 +20,7 @@ class Application extends React.Component {
     return (
       <Dashboard history={history} changeMode={changeMode}>
         <Switch>
-          { /* Home */}
+          {/* Home */}
           <Route exact path="/app" component={BlankPage} />
           <Route path="/app/dashboard" component={DashboardPage} />
           <Route path="/app/form" component={Form} />
@@ -27,6 +28,8 @@ class Application extends React.Component {
           <Route path="/app/page-list" component={Parent} />
           <Route path="/app/pages/not-found" component={NotFound} />
           <Route path="/app/pages/error" component={Error} />
+          {/* 2Fast Component */}
+          <Route path="/app/create-user" component={CreateUser} />
           <Route component={NotFound} />
         </Switch>
       </Dashboard>

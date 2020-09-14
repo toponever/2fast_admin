@@ -33,6 +33,7 @@ class MenuProfile extends React.Component {
   render() {
     const { classes, userAttr } = this.props;
     const { anchorEl, status } = this.state;
+    console.log(userAttr);
     const setStatus = st => {
       switch (st) {
         case 'online':

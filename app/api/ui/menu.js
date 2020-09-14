@@ -167,6 +167,42 @@ module.exports = [
   // },
   /* 2Fast Scope */
   {
+    key: 'dashboard',
+    name: 'DashBoard',
+    icon: 'dashboard',
+    child: [
+      {
+        key: 'dashboard',
+        name: 'Dashboard',
+        title: true,
+      },
+      {
+        key: 'project_dashboard',
+        name: 'Project Dashboard',
+        icon: 'poll',
+        link: '',
+      },
+      {
+        key: 'assests_dashboard',
+        name: 'Assets Dashboard',
+        icon: 'pie_chart',
+        link: '',
+      },
+      {
+        key: 'sla_dashboard',
+        name: 'SLA Dashboard',
+        icon: 'show_chart',
+        link: '',
+      },
+      {
+        key: 'repair_dashboard',
+        name: 'Service Dashboard',
+        icon: 'table_chart',
+        link: '',
+      },
+    ],
+  },
+  {
     key: 'yourwork',
     name: 'Your Work',
     icon: 'work',
@@ -275,7 +311,7 @@ module.exports = [
         key: 'create_user',
         name: 'Create User',
         icon: 'person_add_alt_1',
-        link: '',
+        link: '/app/create-user',
       },
       {
         key: 'delete_user',

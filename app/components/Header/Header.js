@@ -10,7 +10,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import FullscreenOutlined from '@material-ui/icons/FullscreenOutlined';
 import FullscreenExitOutlined from '@material-ui/icons/FullscreenExitOutlined';
 import InvertColors from '@material-ui/icons/InvertColorsOutlined';
-import HelpOutlineOutlined from '@material-ui/icons/HelpOutlineOutlined';
+// import HelpOutlineOutlined from '@material-ui/icons/HelpOutlineOutlined';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -18,7 +18,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import Button from '@material-ui/core/Button';
 import { NavLink, Link } from 'react-router-dom';
 import brand from 'enl-api/dummy/brand';
-import logo from 'enl-images/logo.svg';
+// import logo from 'enl-images/logo.svg';
+
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import menuMessages from 'enl-api/ui/menuMessages';
 import link from 'enl-api/ui/link';
@@ -28,6 +29,9 @@ import SelectLanguage from '../SelectLanguage';
 import messages from './messages';
 import styles from './header-jss';
 
+// 2fast logo
+import logo from '../../api/images/2fast.png';
+
 const elem = document.documentElement;
 
 class Header extends React.Component {
@@ -35,7 +39,7 @@ class Header extends React.Component {
     open: false,
     fullScreen: false,
     turnDarker: false,
-    showTitle: false
+    showTitle: false,
   };
 
   // Initial header style
@@ -45,7 +49,7 @@ class Header extends React.Component {
 
   componentDidMount = () => {
     window.addEventListener('scroll', this.handleScroll);
-  }
+  };
 
   componentWillUnmount() {
     window.removeEventListener('scroll', this.handleScroll);
@@ -54,8 +58,8 @@ class Header extends React.Component {
   handleScroll = () => {
     const doc = document.documentElement;
     const scroll = (window.pageYOffset || doc.scrollTop) - (doc.clientTop || 0);
-    const newFlagDarker = (scroll > 30);
-    const newFlagTitle = (scroll > 40);
+    const newFlagDarker = scroll > 30;
+    const newFlagTitle = scroll > 40;
     if (this.flagDarker !== newFlagDarker) {
       this.setState({ turnDarker: newFlagDarker });
       this.flagDarker = newFlagDarker;
@@ -64,7 +68,7 @@ class Header extends React.Component {
       this.setState({ showTitle: newFlagTitle });
       this.flagTitle = newFlagTitle;
     }
-  }
+  };
 
   openFullScreen = () => {
     this.setState({ fullScreen: true });
@@ -95,7 +99,7 @@ class Header extends React.Component {
     }
   };
 
-  turnMode = mode => {
+  turnMode = (mode) => {
     const { changeMode } = this.props;
     if (mode === 'light') {
       changeMode('dark');
@@ -111,32 +115,28 @@ class Header extends React.Component {
       margin,
       mode,
       title,
-      openGuide,
+      // openGuide,
       history,
       signOut,
       dense,
       isLogin,
       avatar,
-      intl
+      intl,
     } = this.props;
-    const {
-      fullScreen,
-      open,
-      turnDarker,
-      showTitle
-    } = this.state;
-
+    const { fullScreen, open, turnDarker, showTitle } = this.state; // eslint-disable-line
     return (
       <AppBar
         className={classNames(
           classes.appBar,
           classes.floatingBar,
           margin && classes.appBarShift,
-          turnDarker && classes.darker,
+          turnDarker && classes.darker
         )}
       >
         <Toolbar disableGutters={!open}>
-          <div className={classNames(classes.brandWrap, dense && classes.dense)}>
+          <div
+            className={classNames(classes.brandWrap, dense && classes.dense)}
+          >
             <span>
               <IconButton
                 className={classes.menuButton}
@@ -147,22 +147,40 @@ class Header extends React.Component {
               </IconButton>
             </span>
             <Hidden smDown>
-              <NavLink to="/app" className={classNames(classes.brand, classes.brandBar)}>
-                <img src={logo} alt={brand.name} />
-                {brand.name}
+              <NavLink
+                to="/app"
+                className={classNames(classes.brand, classes.brandBar)}
+                style={{ marginRight: '110px' }}
+              >
+                <img
+                  src={logo}
+                  style={{
+                    position: 'absolute',
+                    width: '115px',
+                    marginLeft: '8%',
+                  }}
+                  alt={brand.name}
+                />
+                {/* {brand.name} */}
               </NavLink>
             </Hidden>
           </div>
           <Hidden smDown>
-            <div className={classes.headerProperties}>
+            <div
+              className={classes.headerProperties}
+              style={{ paddingLeft: '0%' }}
+            >
               <div
                 className={classNames(
                   classes.headerAction,
-                  showTitle && classes.fadeOut,
+                  showTitle && classes.fadeOut
                 )}
               >
                 {fullScreen ? (
-                  <Tooltip title={intl.formatMessage(messages.fullScreen)} placement="bottom">
+                  <Tooltip
+                    title={intl.formatMessage(messages.fullScreen)}
+                    placement="bottom"
+                  >
                     <IconButton
                       className={classes.button}
                       onClick={this.closeFullScreen}
@@ -171,7 +189,10 @@ class Header extends React.Component {
                     </IconButton>
                   </Tooltip>
                 ) : (
-                  <Tooltip title={intl.formatMessage(messages.exitFullScreen)} placement="bottom">
+                  <Tooltip
+                    title={intl.formatMessage(messages.exitFullScreen)}
+                    placement="bottom"
+                  >
                     <IconButton
                       className={classes.button}
                       onClick={this.openFullScreen}
@@ -180,7 +201,10 @@ class Header extends React.Component {
                     </IconButton>
                   </Tooltip>
                 )}
-                <Tooltip title={intl.formatMessage(messages.lamp)} placement="bottom">
+                <Tooltip
+                  title={intl.formatMessage(messages.lamp)}
+                  placement="bottom"
+                >
                   <IconButton
                     className={classes.button}
                     onClick={() => this.turnMode(mode)}
@@ -188,20 +212,27 @@ class Header extends React.Component {
                     <InvertColors />
                   </IconButton>
                 </Tooltip>
-                <Tooltip title={intl.formatMessage(messages.guide)} placement="bottom">
+                {/* <Tooltip
+                  title={intl.formatMessage(messages.guide)}
+                  placement="bottom"
+                >
                   <IconButton className={classes.button} onClick={openGuide}>
                     <HelpOutlineOutlined />
                   </IconButton>
-                </Tooltip>
+                </Tooltip> */}
               </div>
               <Typography
                 component="h2"
                 className={classNames(
                   classes.headerTitle,
-                  showTitle && classes.show,
+                  showTitle && classes.show
                 )}
               >
-                {menuMessages[title] !== undefined ? <FormattedMessage {...menuMessages[title]} /> : title}
+                {menuMessages[title] !== undefined ? (
+                  <FormattedMessage {...menuMessages[title]} />
+                ) : (
+                  title
+                )}
               </Typography>
             </div>
           </Hidden>
@@ -218,21 +249,20 @@ class Header extends React.Component {
           </Hidden>
           <div className={classes.userToolbar}>
             <SelectLanguage />
-            {isLogin
-              ? <UserMenu signOut={signOut} avatar={avatar} />
-              : (
-                <Button
-                  color="primary"
-                  className={classes.buttonTop}
-                  component={Link}
-                  to={link.login}
-                  variant="contained"
-                >
-                  <AccountCircle />
-                  <FormattedMessage {...messages.login} />
-                </Button>
-              )
-            }
+            {isLogin ? (
+              <UserMenu signOut={signOut} avatar={avatar} />
+            ) : (
+              <Button
+                color="primary"
+                className={classes.buttonTop}
+                component={Link}
+                to={link.login}
+                variant="contained"
+              >
+                <AccountCircle />
+                <FormattedMessage {...messages.login} />
+              </Button>
+            )}
           </div>
         </Toolbar>
       </AppBar>
@@ -253,12 +283,12 @@ Header.propTypes = {
   openGuide: PropTypes.func.isRequired,
   signOut: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
-  intl: intlShape.isRequired
+  intl: intlShape.isRequired,
 };
 
 Header.defaultProps = {
   dense: false,
-  isLogin: false
+  isLogin: false,
 };
 
 export default withStyles(styles)(injectIntl(Header));
