@@ -308,16 +308,10 @@ module.exports = [
         title: true,
       },
       {
-        key: 'create_user',
-        name: 'Create User',
-        icon: 'person_add_alt_1',
-        link: '/app/create-user',
-      },
-      {
-        key: 'delete_user',
-        name: 'Delete User',
-        icon: 'person_remove_alt_1',
-        link: '',
+        key: 'manage_user',
+        name: 'Manage User',
+        icon: 'account_circle',
+        link: '/app/manage-user',
       },
       {
         key: 'access_requests',

@@ -10,13 +10,13 @@ import {
   Form,
   Table,
   Parent,
-  CreateUser,
+  ManageUser,
 } from '../pageListAsync';
 
 class Application extends React.Component {
   render() {
     const { changeMode, history } = this.props;
-    console.log(this.props);
+    // console.log(this.props);
     return (
       <Dashboard history={history} changeMode={changeMode}>
         <Switch>
@@ -29,7 +29,7 @@ class Application extends React.Component {
           <Route path="/app/pages/not-found" component={NotFound} />
           <Route path="/app/pages/error" component={Error} />
           {/* 2Fast Component */}
-          <Route path="/app/create-user" component={CreateUser} />
+          <Route path="/app/manage-user" component={ManageUser} />
           <Route component={NotFound} />
         </Switch>
       </Dashboard>

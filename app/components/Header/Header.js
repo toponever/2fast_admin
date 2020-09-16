@@ -25,7 +25,7 @@ import menuMessages from 'enl-api/ui/menuMessages';
 import link from 'enl-api/ui/link';
 import UserMenu from './UserMenu';
 import SearchUi from '../Search/SearchUi';
-import SelectLanguage from '../SelectLanguage';
+// import SelectLanguage from '../SelectLanguage';
 import messages from './messages';
 import styles from './header-jss';
 
@@ -248,7 +248,7 @@ class Header extends React.Component {
             <span className={classes.separatorV} />
           </Hidden>
           <div className={classes.userToolbar}>
-            <SelectLanguage />
+            {/* <SelectLanguage /> */}
             {isLogin ? (
               <UserMenu signOut={signOut} avatar={avatar} />
             ) : (

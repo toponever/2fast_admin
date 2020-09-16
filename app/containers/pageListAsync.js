@@ -66,7 +66,7 @@ export const NotFoundDedicated = Loadable({
   loading: Loading,
 });
 /* ------ 2Fast page ------- */
-export const CreateUser = Loadable({
-  loader: () => import('./Users/CreateUser/CreateUser'),
+export const ManageUser = Loadable({
+  loader: () => import('./Users/ManageUser/ManageUser'),
   loading: Loading,
 });
