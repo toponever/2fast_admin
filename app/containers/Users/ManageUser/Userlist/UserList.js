@@ -8,7 +8,6 @@ import avatars from '../../../../api/images/avatars';
 import axios from 'axios';
 
 import { userData } from '../../dummy-data/dummy-user';
-import UserCardDetail from './UserCardDetail';
 
 const useStyles = makeStyles({
   div: {
@@ -111,8 +110,6 @@ const UserList = () => {
         wrap="wrap"
         className={classes.grid}
       >
-        {/* <UserCardDetail data={userData} /> */}
-        <TestData data={userData} />
         <UserCard />
         <UserCard />
         <UserCard />

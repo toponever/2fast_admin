@@ -6,10 +6,19 @@ import Paper from '@material-ui/core/Paper';
 // import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import PersonAdd from '@material-ui/icons/PersonAdd';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
 
 import UserList from './Userlist/UserList';
 import UserDataTable from './UserDataTable';
 import CreateUser from './CreateUser';
+
+// function Alert(props) {
+//   return <MuiAlert elevation={6} variant="filled" {...props} />;
+// }
 
 const useStyles = makeStyles({
   headerBox: {
@@ -41,18 +50,29 @@ const ManageUser = () => {
   const classes = useStyles();
 
   const [newUserModal, setNewUserModal] = useState(false);
-  const [userData, setUserData] = useState({});
-  // const [userData, setUserData] = useState([]);
+  const [userData, setUserData] = useState([]);
 
-  const handleClickOpen = () => {
+  const newUserPopModal = () => {
     setNewUserModal(true);
   };
-  const handleClose = () => {
+  const newUserCloseModal = () => {
     setNewUserModal(false);
   };
 
+  // const [completeAlert, setCompleteAlert] = useState(false);
+  // const userAlertPopHandle = () => {
+  //   setCompleteAlert(true);
+  // };
+  // const userAlertCloseHandle = (event, reason) => {
+  //   if (reason === 'clickaway') {
+  //     return;
+  //   }
+  //   setCompleteAlert(false);
+  // };
+
   const userInformation = (username, password) => {
     setUserData({ username: username, password: password });
+    // setCompleteAlert(true);
     // setUserData((state) => {
     //   let oldData = [...state];
     //   let newData = { u: username, pwd: password };
@@ -66,38 +86,58 @@ const ManageUser = () => {
     createUserModal = (
       <CreateUser
         opened={newUserModal}
-        handleClose={handleClose}
+        handleClose={newUserCloseModal}
         submited={userInformation}
       />
     );
   }
 
+  // let userSuccessAlert = null;
+  // if (completeAlert) {
+  //   userSuccessAlert = (
+  //     <Snackbar open={completeAlert} autoHideDuration={6000} onClose={userAlertCloseHandle}>
+  //       <Alert onClose={userAlertCloseHandle} severity="success">
+  //         This is a success message!
+  //       </Alert>
+  //     </Snackbar>
+  //   );
+  // }
+
   useEffect(() => {
-    // console.log(userData);
+    console.log(userData);
   }, [userData]);
 
   return (
     <div>
       {createUserModal}
+      {/* {userSuccessAlert} */}
       <Grid container direction="row">
         <div className={classes.headerBox}>
           <p className={classes.userlistText}>User Recent Create</p>
           <Button
             variant="outlined"
             color="primary"
-            onClick={handleClickOpen}
+            onClick={newUserPopModal}
             startIcon={<PersonAdd />}
           >
             Create User
           </Button>
         </div>
         <Paper elevation={1} className={classes.contentPaper}>
+          {/* <UserDataTable /> */}
           <Grid container justify="center">
             <UserList />
           </Grid>
         </Paper>
         <div className={classes.dataTableBox}>
-          <UserDataTable />
+          {/* <Button variant="outlined" onClick={handleClick}>
+            Open success snackbar
+          </Button>
+          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+            <Alert onClose={handleClose} severity="success">
+              This is a success message!
+            </Alert>
+          </Snackbar> */}
         </div>
       </Grid>
     </div>

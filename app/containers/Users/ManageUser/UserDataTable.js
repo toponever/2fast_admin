@@ -6,24 +6,17 @@ import Avatar from 'react-avatar';
 const UserDataTable = () => {
   const columns = ['Image', 'Name', 'Role', 'License', 'Team', 'Latest Active'];
 
-  const Comp = 'JESUS KUY';
-  const DataTest = {
-    text1: <div><Avatar size="50" name="John Walsh" round={true} />hello</div>,
-    text2: `${Comp}`,
-    text3: 'helloworld',
-  };
   const data = [
     [
       <Avatar
-        size="100"
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRvF-J2FLf7GZ4IpcY0N5mM4zBkjV9SRbf3zQ&usqp=CAU"
+        size="100"        
         title="kokoko"
         value="kokokokoko"
         round={true}
         name="OMG"
         size="50px"
       />,
-      Comp,
+      'JESUS KUY',
       'Test Popcorn',
       'Yonkers',
       'NY',
@@ -31,8 +24,7 @@ const UserDataTable = () => {
     [<div><Avatar size="50" name="John Walsh" round={true} /> Hello World</div>, 'John Walsh', 'Test Corp', 'Hartford', 'CT'],
     [
       <Avatar
-        size="100"
-        src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQuIbv-7JSgC23hcGq8qDRBpFzdMBEw8urHdQ&usqp=CAU"
+        size="100"        
       />,
       'Bob Herm',
       'Test Corp',
@@ -117,7 +109,7 @@ const UserDataTable = () => {
   return (
     <MUIDataTable
       title={'Users Management'}
-      data={data}
+      // data={data}
       columns={columns}
       options={options}
     />

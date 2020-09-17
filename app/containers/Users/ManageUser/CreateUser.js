@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -13,7 +13,13 @@ import Grid from '@material-ui/core/Grid';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Input from '@material-ui/core/Input';
-import { FormControlLabel } from '@material-ui/core';
+// import { FormControlLabel } from '@material-ui/core';
+import Snackbar from '@material-ui/core/Snackbar';
+import MuiAlert from '@material-ui/lab/Alert';
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles({
   dialog: {
@@ -72,9 +78,42 @@ const CreateUser = (props) => {
     submited(u, p);
   };
 
+  const [completeAlert, setCompleteAlert] = useState(false);
+  const userAlertPopHandle = () => {
+    setCompleteAlert(true);
+  };
+  const userAlertCloseHandle = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setCompleteAlert(false);
+  };
+
+  let userSuccessAlert = null;
+  if (completeAlert) {
+    userSuccessAlert = (
+      <Snackbar
+        open={completeAlert}
+        autoHideDuration={6000}
+        onClose={userAlertCloseHandle}
+        className={classes.snackbar}
+
+      >
+        <Alert
+          onClose={userAlertCloseHandle}
+          severity="success"
+          style={{ zIndex: '2000' }}
+        >
+          This is a success message!
+        </Alert>
+      </Snackbar>
+    );
+  }
+
   // console.log(props);
   return (
     <div>
+      
       <Dialog
         open={opened}
         onClose={handleClose}
@@ -109,15 +148,26 @@ const CreateUser = (props) => {
                   </div>
                 </div>
                 <div className={classes.actionBox}>
-                  <Button color="primary" variant="contained" type="submit">
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    type="submit"
+                    onClick={userAlertPopHandle}
+                  >
                     Create
                   </Button>
-                  <Button onClick={handleClose} color="primary" className={classes.cancelBtn} variant="outlined">
+                  <Button
+                    onClick={handleClose}
+                    color="primary"
+                    className={classes.cancelBtn}
+                    variant="outlined"
+                  >
                     Cancel
                   </Button>
                 </div>
               </form>
             </div>
+            {userSuccessAlert}
           </Grid>
         </DialogContent>
       </Dialog>
