@@ -1,12 +1,9 @@
 /* eslint-disable */
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-// import DialogContentText from '@material-ui/core/DialogContentText';
 import Button from '@material-ui/core/Button';
-// import DialogTitle from '@material-ui/core/DialogTitle';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 // import Paper from '@material-ui/core/Paper';
@@ -16,10 +13,15 @@ import Input from '@material-ui/core/Input';
 // import { FormControlLabel } from '@material-ui/core';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import Slide from '@material-ui/core/Slide';
 
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="down" ref={ref} {...props} />;
+});
 
 const useStyles = makeStyles({
   dialog: {
@@ -68,7 +70,16 @@ const useStyles = makeStyles({
 
 const CreateUser = (props) => {
   const classes = useStyles();
-  const { opened, handleClose, submited } = props;
+  const {
+    opened,
+    handleClose,
+    submited,
+    userModalStatus,
+    userModalClose,
+    users,
+  } = props;
+
+
   const username = useRef();
   const password = useRef();
   const getUserValue = (event) => {
@@ -78,45 +89,30 @@ const CreateUser = (props) => {
     submited(u, p);
   };
 
-  const [completeAlert, setCompleteAlert] = useState(false);
-  const userAlertPopHandle = () => {
-    setCompleteAlert(true);
-  };
-  const userAlertCloseHandle = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setCompleteAlert(false);
-  };
-
   let userSuccessAlert = null;
-  if (completeAlert) {
+  if (userModalStatus) {
     userSuccessAlert = (
       <Snackbar
-        open={completeAlert}
+        open={userModalStatus}
         autoHideDuration={6000}
-        onClose={userAlertCloseHandle}
+        onClose={userModalClose}
         className={classes.snackbar}
-
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }}
       >
-        <Alert
-          onClose={userAlertCloseHandle}
-          severity="success"
-          style={{ zIndex: '2000' }}
-        >
-          This is a success message!
+        <Alert onClose={userModalClose} severity="success">
+          User has been created successfully.
         </Alert>
       </Snackbar>
     );
   }
 
-  // console.log(props);
-  return (
-    <div>
-      
+  let createUserDialog
+    createUserDialog = (
       <Dialog
         open={opened}
         onClose={handleClose}
+        TransitionComponent={Transition}
+        keepMounted
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         maxWidth="xs"
@@ -144,16 +140,13 @@ const CreateUser = (props) => {
                 </FormControl>
                 <div className={classes.userStatus}>
                   <div className={classes.userStatusInside}>
-                    <p className={classes.userStatusP}>Max users : 2 / 5</p>
+                    <p className={classes.userStatusP}>
+                      Max users : {users.currentUsers} / {users.MAX_USERS}
+                    </p>
                   </div>
                 </div>
                 <div className={classes.actionBox}>
-                  <Button
-                    color="primary"
-                    variant="contained"
-                    type="submit"
-                    onClick={userAlertPopHandle}
-                  >
+                  <Button color="primary" variant="contained" type="submit">
                     Create
                   </Button>
                   <Button
@@ -171,14 +164,18 @@ const CreateUser = (props) => {
           </Grid>
         </DialogContent>
       </Dialog>
-    </div>
-  );
+    );
+
+  return <div>{createUserDialog}</div>;
 };
 
 CreateUser.propTypes = {
   opened: PropTypes.bool,
   handleClose: PropTypes.func,
   submited: PropTypes.func,
+  userModalStatus: PropTypes.bool,
+  userModalClose: PropTypes.func,
+  users: PropTypes.object,
 };
 
 export default CreateUser;

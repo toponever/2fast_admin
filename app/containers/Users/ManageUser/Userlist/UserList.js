@@ -1,11 +1,12 @@
 /* eslint-disable */
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/styles';
+import axios from 'axios';
+import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import avatars from '../../../../api/images/avatars';
-import axios from 'axios';
 
 import { userData } from '../../dummy-data/dummy-user';
 
@@ -54,7 +55,7 @@ const UserList = () => {
             <img src={avatars[0]} className={classes.Image} />
           </div>
           <div className={classes.userDetail}>
-            <Typography />
+            <Typography>Jonh Sownah</Typography>
             <Typography>CEO</Typography>
           </div>
         </Paper>
@@ -76,29 +77,6 @@ const UserList = () => {
       setUserData(dataTest);
     });
   }, []);
-
-  useEffect(() => {
-    console.log(userData);
-  }, [userData]);
-
-  const TestData = (props) => {
-    const { data } = props;
-    // console.log(data);
-    // data.map((key) => {
-    //   console.log(key);
-    // });
-    return (
-      <div>
-        {/* {data.map((key) => (
-          <div>{key.name}</div>
-        ))} */}
-      </div>
-    );
-  };
-
-  // const test2 = userData.map((value, index) => {
-  //   return <Hello key={index} name={value.name} />;
-  // });
 
   return (
     <div className={classes.div}>
@@ -122,5 +100,9 @@ const UserList = () => {
     </div>
   );
 };
+
+// UserList.propTypes = {
+  
+// };
 
 export default UserList;

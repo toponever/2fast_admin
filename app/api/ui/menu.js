@@ -314,6 +314,18 @@ module.exports = [
         link: '/app/manage-user',
       },
       {
+        key: 'manage_team',
+        name: 'Manage Team',
+        icon: 'account_circle',
+        link: '',
+      },
+      {
+        key: 'manage_grp_permission',
+        name: 'Group & Permission',
+        icon: 'account_circle',
+        link: '',
+      },
+      {
         key: 'access_requests',
         name: 'Access Requests',
         icon: 'beenhere',

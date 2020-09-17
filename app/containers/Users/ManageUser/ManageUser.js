@@ -6,19 +6,32 @@ import Paper from '@material-ui/core/Paper';
 // import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import PersonAdd from '@material-ui/icons/PersonAdd';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
+// import IconButton from '@material-ui/core/IconButton';
+// import CloseIcon from '@material-ui/icons/Close';
 
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 
 import UserList from './Userlist/UserList';
 import UserDataTable from './UserDataTable';
-import CreateUser from './CreateUser';
+import CreateUser from './CreateUser/CreateUser';
+// import CreateDone from './CreateUser/CreateDone';
 
-// function Alert(props) {
-//   return <MuiAlert elevation={6} variant="filled" {...props} />;
-// }
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Slide from '@material-ui/core/Slide';
+import CreateDone from './CreateUser/CreateDone';
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="down" ref={ref} {...props} />;
+});
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 const useStyles = makeStyles({
   headerBox: {
@@ -32,8 +45,6 @@ const useStyles = makeStyles({
     marginTop: '7px',
     fontWeight: 'bold',
     fontSize: '1.3rem',
-    // textShadow: '0px 0px 0px #a0a0a0',
-    // color: '#4dabf5',
   },
   contentPaper: {
     width: '100%',
@@ -49,36 +60,51 @@ const useStyles = makeStyles({
 const ManageUser = () => {
   const classes = useStyles();
 
+  const [currentUsers, setCurrentUsers] = useState(0);
+  const usersCount = {
+    MAX_USERS: 5,
+    currentUsers: currentUsers,
+  };
+
+  const [userData, setUserData] = useState({ username: '', password: '' });
   const [newUserModal, setNewUserModal] = useState(false);
-  const [userData, setUserData] = useState([]);
+  const [nextStepStatus, setnextStepStatus] = useState(false);
+  const [completeAlert, setCompleteAlert] = useState(false);
+  const [userDataStack, setUserDataStack] = useState([]);
 
   const newUserPopModal = () => {
     setNewUserModal(true);
   };
   const newUserCloseModal = () => {
     setNewUserModal(false);
+    setCompleteAlert(false);
   };
-
-  // const [completeAlert, setCompleteAlert] = useState(false);
-  // const userAlertPopHandle = () => {
-  //   setCompleteAlert(true);
-  // };
-  // const userAlertCloseHandle = (event, reason) => {
-  //   if (reason === 'clickaway') {
-  //     return;
-  //   }
-  //   setCompleteAlert(false);
-  // };
+  const closeNextStep = () => {
+    setnextStepStatus(false);
+  };
+  const userAlertCloseHandle = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setCompleteAlert(false);
+  };
 
   const userInformation = (username, password) => {
     setUserData({ username: username, password: password });
-    // setCompleteAlert(true);
-    // setUserData((state) => {
-    //   let oldData = [...state];
-    //   let newData = { u: username, pwd: password };
-    //   oldData.push(newData);
-    //   return oldData;
-    // });
+    if (username && password != '') {
+      // setCompleteAlert(true);
+      setNewUserModal(false);
+      setnextStepStatus(true);
+      setCurrentUsers((state) => state + 1);
+      setUserDataStack((state) => {
+        const data = [...state];
+        data.push({
+          username: username,
+          password: password,
+        });
+        return data;
+      });
+    }
   };
 
   let createUserModal = null;
@@ -88,56 +114,69 @@ const ManageUser = () => {
         opened={newUserModal}
         handleClose={newUserCloseModal}
         submited={userInformation}
+        userModalStatus={completeAlert}
+        userModalClose={userAlertCloseHandle}
+        users={usersCount}
       />
     );
   }
 
-  // let userSuccessAlert = null;
-  // if (completeAlert) {
-  //   userSuccessAlert = (
-  //     <Snackbar open={completeAlert} autoHideDuration={6000} onClose={userAlertCloseHandle}>
-  //       <Alert onClose={userAlertCloseHandle} severity="success">
-  //         This is a success message!
-  //       </Alert>
-  //     </Snackbar>
-  //   );
-  // }
+  const [errorUsers, setErrorUsers] = useState(false);
+  const popAlert = () => {
+    setErrorUsers(true);
+  };
+  const disAlert = () => {
+    setErrorUsers(false);
+  };
+  let maxUsersAlert = (
+    <Snackbar
+      open={errorUsers}
+      autoHideDuration={6000}
+      onClose={disAlert}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+    >
+      <Alert onClose={disAlert} severity="error">
+        User has reach limit.
+      </Alert>
+    </Snackbar>
+  );
 
   useEffect(() => {
-    console.log(userData);
-  }, [userData]);
+    console.log(userDataStack);
+    console.log(usersCount);
+    // console.log(nextStepStatus);
+  }, [userDataStack, currentUsers]);
 
+  let nextStepModal = null;
+  if (nextStepStatus) {
+    nextStepModal = (
+      <CreateDone modalStatus={nextStepStatus} closeModal={closeNextStep} />
+    );
+  }
   return (
     <div>
       {createUserModal}
-      {/* {userSuccessAlert} */}
+      {nextStepModal}
+      {maxUsersAlert}
       <Grid container direction="row">
         <div className={classes.headerBox}>
           <p className={classes.userlistText}>User Recent Create</p>
           <Button
             variant="outlined"
             color="primary"
-            onClick={newUserPopModal}
+            onClick={currentUsers < 5 ? newUserPopModal : popAlert}
             startIcon={<PersonAdd />}
           >
             Create User
           </Button>
         </div>
         <Paper elevation={1} className={classes.contentPaper}>
-          {/* <UserDataTable /> */}
           <Grid container justify="center">
             <UserList />
           </Grid>
         </Paper>
         <div className={classes.dataTableBox}>
-          {/* <Button variant="outlined" onClick={handleClick}>
-            Open success snackbar
-          </Button>
-          <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
-            <Alert onClose={handleClose} severity="success">
-              This is a success message!
-            </Alert>
-          </Snackbar> */}
+          <UserDataTable users={usersCount} />
         </div>
       </Grid>
     </div>
