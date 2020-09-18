@@ -15,7 +15,7 @@ export const userData = [
     img: '/images/avatars/pp_boy2.svg',
   },
   {
-    name: 'Punara Godofwar',
+    name: 'Punara Rung',
     role: 'worker',
     team: 'CHARLEE',
     lastact: '2020-09-22',

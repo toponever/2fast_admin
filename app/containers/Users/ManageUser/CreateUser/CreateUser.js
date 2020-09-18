@@ -15,6 +15,8 @@ import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 import Slide from '@material-ui/core/Slide';
 
+import { useForm, Controller } from 'react-hook-form';
+
 function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
@@ -79,9 +81,11 @@ const CreateUser = (props) => {
     users,
   } = props;
 
-
   const username = useRef();
   const password = useRef();
+
+  const { register, control, handleSubmit } = useForm();
+
   const getUserValue = (event) => {
     event.preventDefault();
     const u = username.current.children[0].value;
@@ -106,65 +110,90 @@ const CreateUser = (props) => {
     );
   }
 
-  let createUserDialog
-    createUserDialog = (
-      <Dialog
-        open={opened}
-        onClose={handleClose}
-        TransitionComponent={Transition}
-        keepMounted
-        aria-labelledby="alert-dialog-title"
-        aria-describedby="alert-dialog-description"
-        maxWidth="xs"
-        fullWidth={true}
-      >
-        <div className={classes.modalHeaderBox}>
-          <p className={classes.modalHeaderText}>Create User</p>
-        </div>
-        <DialogContent>
-          <Grid container justify="center">
-            <div className={classes.formBox}>
-              <form onSubmit={getUserValue} className={classes.form}>
-                <FormControl>
-                  <InputLabel required>Username</InputLabel>
-                  <Input placeholder="username" ref={username} required />
-                </FormControl>
-                <FormControl>
-                  <InputLabel required>Password</InputLabel>
-                  <Input
-                    placeholder="password"
-                    ref={password}
-                    type="password"
-                    required
-                  />
-                </FormControl>
-                <div className={classes.userStatus}>
-                  <div className={classes.userStatusInside}>
-                    <p className={classes.userStatusP}>
-                      Max users : {users.currentUsers} / {users.MAX_USERS}
-                    </p>
-                  </div>
+  let createUserDialog;
+  createUserDialog = (
+    <Dialog
+      open={opened}
+      onClose={handleClose}
+      TransitionComponent={Transition}
+      keepMounted
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+      maxWidth="xs"
+      fullWidth={true}
+    >
+      <div className={classes.modalHeaderBox}>
+        <p className={classes.modalHeaderText}>Create User</p>
+      </div>
+      <DialogContent>
+        <Grid container justify="center">
+          <div className={classes.formBox}>
+            {/* <form onSubmit={getUserValue} className={classes.form}> */}
+            <form
+              onSubmit={handleSubmit((data) => console.log(data))}
+              className={classes.form}
+            >
+              <FormControl>
+                <InputLabel required>Username</InputLabel>
+                {/* <Input placeholder="username" ref={username} required /> */}
+                {/* <Input
+                  placeholder="username"
+                  ref={username}
+                  required
+                  inputRef={register}
+                  name="username"
+                /> */}
+                <Controller
+                  as={Input}
+                  name="username"
+                  placeholder="USERNAME"
+                  required
+                  control={control}
+                />
+              </FormControl>
+              <FormControl>
+                <InputLabel required>Password</InputLabel>
+                {/* <Input
+                  placeholder="password"
+                  ref={password}
+                  type="password"
+                  required
+                /> */}
+                <Input
+                  placeholder="password"
+                  inputRef={register}
+                  name="password"
+                  type="password"
+                  required
+                />
+              </FormControl>
+              <div className={classes.userStatus}>
+                <div className={classes.userStatusInside}>
+                  <p className={classes.userStatusP}>
+                    Max users : {users.currentUsers} / {users.MAX_USERS}
+                  </p>
                 </div>
-                <div className={classes.actionBox}>
-                  <Button color="primary" variant="contained" type="submit">
-                    Create
-                  </Button>
-                  <Button
-                    onClick={handleClose}
-                    color="primary"
-                    className={classes.cancelBtn}
-                    variant="outlined"
-                  >
-                    Cancel
-                  </Button>
-                </div>
-              </form>
-            </div>
-            {userSuccessAlert}
-          </Grid>
-        </DialogContent>
-      </Dialog>
-    );
+              </div>
+              <div className={classes.actionBox}>
+                <Button color="primary" variant="contained" type="submit">
+                  Create
+                </Button>
+                <Button
+                  onClick={handleClose}
+                  color="primary"
+                  className={classes.cancelBtn}
+                  variant="outlined"
+                >
+                  Cancel
+                </Button>
+              </div>
+            </form>
+          </div>
+          {userSuccessAlert}
+        </Grid>
+      </DialogContent>
+    </Dialog>
+  );
 
   return <div>{createUserDialog}</div>;
 };

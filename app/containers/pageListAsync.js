@@ -65,6 +65,11 @@ export const NotFoundDedicated = Loadable({
   loader: () => import('./Pages/Standalone/NotFoundDedicated'),
   loading: Loading,
 });
+/* ------ TEST LIB ----- */
+export const Testlib = Loadable({
+  loader: () => import('./App/Testlib'),
+  loading: Loading,
+});
 /* ------ 2Fast page ------- */
 export const ManageUser = Loadable({
   loader: () => import('./Users/ManageUser/ManageUser'),

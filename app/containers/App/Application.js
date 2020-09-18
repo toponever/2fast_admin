@@ -11,6 +11,7 @@ import {
   Table,
   Parent,
   ManageUser,
+  Testlib
 } from '../pageListAsync';
 
 class Application extends React.Component {
@@ -30,6 +31,7 @@ class Application extends React.Component {
           <Route path="/app/pages/error" component={Error} />
           {/* 2Fast Component */}
           <Route path="/app/manage-user" component={ManageUser} />
+          <Route path="/app/testlib" component={Testlib} />
           <Route component={NotFound} />
         </Switch>
       </Dashboard>
