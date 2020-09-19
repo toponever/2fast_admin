@@ -316,13 +316,13 @@ module.exports = [
       {
         key: 'manage_team',
         name: 'Manage Team',
-        icon: 'account_circle',
-        link: '',
+        icon: 'groups',
+        link: '/app/manage-team',
       },
       {
         key: 'manage_grp_permission',
         name: 'Group & Permission',
-        icon: 'account_circle',
+        icon: 'group',
         link: '',
       },
       {

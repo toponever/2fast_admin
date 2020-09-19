@@ -117,7 +117,7 @@ const CreateUser = (props) => {
       open={opened}
       onClose={handleClose}
       TransitionComponent={Transition}
-      keepMounted
+      // keepMounted
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
       maxWidth="xs"
@@ -145,7 +145,7 @@ const CreateUser = (props) => {
                 <Controller
                   as={Input}
                   name="username"
-                  placeholder="username"
+                  // placeholder="username"
                   control={control}
                   rules={{
                     required: true,
@@ -185,7 +185,7 @@ const CreateUser = (props) => {
                 <Input
                   name="password"
                   type="password"
-                  placeholder="password"
+                  // placeholder="password"
                   inputRef={register({ required: true })}
                 />
                 <div

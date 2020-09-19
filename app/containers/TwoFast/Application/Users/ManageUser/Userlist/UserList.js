@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import avatars from '../../../../api/images/avatars';
+import avatars from '../../../../../../api/images/avatars';
 
 import { userData } from '../../dummy-data/dummy-user';
 import Avatar from 'react-avatar';
