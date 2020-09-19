@@ -84,13 +84,14 @@ const CreateUser = (props) => {
   const username = useRef();
   const password = useRef();
 
-  const { register, control, handleSubmit } = useForm();
+  const { register, control, handleSubmit, errors } = useForm();
 
-  const getUserValue = (event) => {
-    event.preventDefault();
-    const u = username.current.children[0].value;
-    const p = password.current.children[0].value;
-    submited(u, p);
+  const getUserValue = (data) => {
+    // event.preventDefault();
+    console.log(data);
+    // const u = username.current.children[0].value;
+    // const p = password.current.children[0].value;
+    submited(data.username, data.password);
   };
 
   let userSuccessAlert = null;
@@ -130,26 +131,48 @@ const CreateUser = (props) => {
           <div className={classes.formBox}>
             {/* <form onSubmit={getUserValue} className={classes.form}> */}
             <form
-              onSubmit={handleSubmit((data) => console.log(data))}
+              onSubmit={handleSubmit((data) => getUserValue(data))}
               className={classes.form}
             >
               <FormControl>
                 <InputLabel required>Username</InputLabel>
                 {/* <Input placeholder="username" ref={username} required /> */}
                 {/* <Input
-                  placeholder="username"
-                  ref={username}
-                  required
-                  inputRef={register}
                   name="username"
+                  placeholder="username"
+                  inputRef={register({ required: true })}
                 /> */}
                 <Controller
                   as={Input}
                   name="username"
-                  placeholder="USERNAME"
-                  required
+                  placeholder="username"
                   control={control}
+                  rules={{
+                    required: true,
+                    minLength: 4,
+                    pattern: {
+                      value: /^[A-Za-z0-9][A-Za-z0-9]*$/i,
+                      message: 'invalid type',
+                    },
+                  }}
                 />
+                <div
+                  style={{
+                    color: 'red',
+                    fontWeight: 'bold',
+                    marginLeft: '6px',
+                  }}
+                >
+                  {errors.username &&
+                    errors.username.type === 'required' &&
+                    'username is required'}
+                  {errors.username &&
+                    errors.username.type === 'minLength' &&
+                    'minimum 4 characters'}
+                  {errors.username &&
+                    errors.username.type === 'pattern' &&
+                    'invalid type'}
+                </div>
               </FormControl>
               <FormControl>
                 <InputLabel required>Password</InputLabel>
@@ -160,12 +183,20 @@ const CreateUser = (props) => {
                   required
                 /> */}
                 <Input
-                  placeholder="password"
-                  inputRef={register}
                   name="password"
                   type="password"
-                  required
+                  placeholder="password"
+                  inputRef={register({ required: true })}
                 />
+                <div
+                  style={{
+                    color: 'red',
+                    fontWeight: 'bold',
+                    marginLeft: '6px',
+                  }}
+                >
+                  {errors.password && 'password is required'}
+                </div>
               </FormControl>
               <div className={classes.userStatus}>
                 <div className={classes.userStatusInside}>

@@ -9,6 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import avatars from '../../../../api/images/avatars';
 
 import { userData } from '../../dummy-data/dummy-user';
+import Avatar from 'react-avatar';
 
 const useStyles = makeStyles({
   div: {
@@ -27,7 +28,7 @@ const useStyles = makeStyles({
     borderRadius: '100%',
     overflow: 'hidden',
     textAlign: 'center',
-    boxShadow: '1px 1px 2px black',
+    boxShadow: '0px 0px 2px black',
   },
   Image: {
     width: '58px',
@@ -45,38 +46,58 @@ const useStyles = makeStyles({
 const UserList = () => {
   const classes = useStyles();
 
-  const [userData, setUserData] = useState([]);
+  // const [userData, setUserData] = useState([]);
 
-  const UserCard = () => {
-    return (
-      <Grid item md={3}>
-        <Paper elevation={2} className={classes.paper}>
-          <div className={classes.profileImageBox}>
-            <img src={avatars[0]} className={classes.Image} />
-          </div>
-          <div className={classes.userDetail}>
-            <Typography>Jonh Sownah</Typography>
-            <Typography>CEO</Typography>
-          </div>
-        </Paper>
-      </Grid>
-    );
-  };
+  // const UserCard = () => {
+  //   return (
+  //     <Grid item md={3}>
+  //       <Paper elevation={2} className={classes.paper}>
+  //         <div className={classes.profileImageBox}>
+  //           <img src={avatars[0]} className={classes.Image} />
+  //         </div>
+  //         <div className={classes.userDetail}>
+  //           <Typography>Jonh Sownah</Typography>
+  //           <Typography>CEO</Typography>
+  //         </div>
+  //       </Paper>
+  //     </Grid>
+  //   );
+  // };
+  // console.log(userData);
+  // const FetchUser = () => {
+  //   return (
+  //     <div>
+  //       {userData.map((key, index) => (
+  //         <Grid item md={3} key={index}>
+  //           <Paper elevation={2} className={classes.paper}>
+  //             <div className={classes.profileImageBox}>
+  //               <img src={avatars[0]} className={classes.Image} />
+  //             </div>
+  //             <div className={classes.userDetail}>
+  //               <Typography>{key.name}</Typography>
+  //               <Typography>{key.role}</Typography>
+  //             </div>
+  //           </Paper>
+  //         </Grid>
+  //       ))}
+  //     </div>
+  //   );
+  // };
 
-  useEffect(() => {
-    const getData = [];
-    axios.get('https://jsonplaceholder.typicode.com/users').then((res) => {
-      // console.log(res.data);
-      const dataTest = res.data;
-      dataTest.map((key) => {
-        // console.log(key)
-        getData.push({
-          name: key.name,
-        });
-      });
-      setUserData(dataTest);
-    });
-  }, []);
+  // useEffect(() => {
+  //   const getData = [];
+  //   axios.get('https://jsonplaceholder.typicode.com/users').then((res) => {
+  //     console.log(res.data);
+  //     const dataTest = res.data;
+  //     dataTest.map((key) => {
+  //       console.log(key)
+  //       getData.push({
+  //         name: key.name,
+  //       });
+  //     });
+  //     setUserData(dataTest);
+  //   });
+  // }, []);
 
   return (
     <div className={classes.div}>
@@ -88,21 +109,27 @@ const UserList = () => {
         wrap="wrap"
         className={classes.grid}
       >
-        <UserCard />
-        <UserCard />
-        <UserCard />
-        <UserCard />
-        <UserCard />
-        <UserCard />
-        <UserCard />
-        <UserCard />
+        {userData.map((key, index) => (
+          <Grid item md={3} key={index}>
+            <Paper elevation={2} className={classes.paper}>
+              <div className={classes.profileImageBox}>
+                {/* <img src={avatars[0]} className={classes.Image} /> */}
+                <Avatar name={key.name} size="60" round={true} />
+              </div>
+              <div className={classes.userDetail}>
+                <Typography>{key.name}</Typography>
+                <Typography>{key.role}</Typography>
+              </div>
+            </Paper>
+          </Grid>
+        ))}
       </Grid>
     </div>
   );
 };
 
 // UserList.propTypes = {
-  
+
 // };
 
 export default UserList;

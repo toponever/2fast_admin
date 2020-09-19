@@ -71,22 +71,34 @@ const ManageUser = () => {
   const [nextStepStatus, setnextStepStatus] = useState(false);
   const [completeAlert, setCompleteAlert] = useState(false);
   const [userDataStack, setUserDataStack] = useState([]);
+  const [userMenu, setUsermenu] = useState(null);
 
   const newUserPopModal = () => {
     setNewUserModal(true);
   };
+
   const newUserCloseModal = () => {
     setNewUserModal(false);
     setCompleteAlert(false);
   };
+
   const closeNextStep = () => {
     setnextStepStatus(false);
   };
+
   const userAlertCloseHandle = (event, reason) => {
     if (reason === 'clickaway') {
       return;
     }
     setCompleteAlert(false);
+  };
+
+  const userMenuPop = (event) => {
+    setUsermenu(event.currentTarget);
+  };
+
+  const userMenuClose = () => {
+    setUsermenu(null);
   };
 
   const userInformation = (username, password) => {
@@ -176,7 +188,12 @@ const ManageUser = () => {
           </Grid>
         </Paper>
         <div className={classes.dataTableBox}>
-          <UserDataTable users={usersCount} />
+          <UserDataTable
+            users={usersCount}
+            userStatus={userMenu}
+            popMenu={userMenuPop}
+            closeMenu={userMenuClose}
+          />
         </div>
       </Grid>
     </div>
