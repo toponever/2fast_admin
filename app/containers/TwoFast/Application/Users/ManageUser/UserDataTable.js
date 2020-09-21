@@ -1,6 +1,10 @@
 /* eslint-disable */
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import {
+  makeStyles,
+  createMuiTheme,
+  MuiThemeProvider,
+} from '@material-ui/core/styles';
 import MUIDataTable from 'mui-datatables';
 import Avatar from 'react-avatar';
 import Fab from '@material-ui/core/Fab';
@@ -12,6 +16,22 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Paper from '@material-ui/core/Paper';
 
 import { userData } from '../dummy-data/dummy-user';
+
+const getMuiTheme = () =>
+  createMuiTheme({
+    overrides: {
+      // MUIDataTable: {
+      //   root: {
+      //     backgroundColor: '#FF000',
+      //   },
+      // },
+      // MUIDataTableBodyCell: {
+      //   root: {
+      //     backgroundColor: '#FF0000',
+      //   },
+      // },
+    },
+  });
 
 const useStyles = makeStyles({
   rowName: {},
@@ -82,18 +102,20 @@ const UserDataTable = (props) => {
     print: false,
   };
   return (
-    <MUIDataTable
-      title={
-        'Users Management  ( ' +
-        users.currentUsers +
-        ' / ' +
-        users.MAX_USERS +
-        ' )'
-      }
-      data={data}
-      columns={columns}
-      options={options}
-    />
+    <MuiThemeProvider theme={getMuiTheme()}>
+      <MUIDataTable
+        title={
+          'Users Management  ( ' +
+          users.currentUsers +
+          ' / ' +
+          users.MAX_USERS +
+          ' )'
+        }
+        data={data}
+        columns={columns}
+        options={options}
+      />
+    </MuiThemeProvider>
   );
 };
 
