@@ -13,7 +13,7 @@ import MUIDataTable from 'mui-datatables';
 import Search from '@material-ui/icons/Search';
 import Fab from '@material-ui/core/Fab';
 
-import { TEAM_LIST } from './dummy-data/dummy-team';
+import { TEAM_LIST } from '../dummy-data/dummy-team';
 
 const getMuiTheme = () =>
   createMuiTheme({

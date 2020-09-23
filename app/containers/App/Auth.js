@@ -3,7 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import NotFound from 'containers/Pages/Standalone/NotFoundDedicated';
 import Outer from '../Templates/Outer';
 import {
-  Login, Register,
+  Register,
   LoginFullstack, RegisterFullstack,
   ResetPassword, ResetPasswordFullstack,
   ComingSoon, Maintenance
@@ -14,7 +14,7 @@ class Auth extends React.Component {
     return (
       <Outer>
         <Switch>
-          <Route path="/login" component={Login} />
+          {/* <Route path="/login" component={Login} /> */}
           <Route path="/register" component={Register} />
           <Route path="/reset-password" component={ResetPassword} />
           <Route path="/login-firebase" component={LoginFullstack} />

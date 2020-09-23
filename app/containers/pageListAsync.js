@@ -25,10 +25,10 @@ export const ResetPasswordFullstack = Loadable({
   loader: () => import('./Pages/UsersFullstack/ResetPassword'),
   loading: Loading,
 });
-export const Login = Loadable({
-  loader: () => import('./Pages/Users/Login'),
-  loading: Loading,
-});
+// export const Login = Loadable({
+//   loader: () => import('./Pages/Users/Login'),
+//   loading: Loading,
+// });
 export const Register = Loadable({
   loader: () => import('./Pages/Users/Register'),
   loading: Loading,
@@ -65,6 +65,10 @@ export const NotFoundDedicated = Loadable({
   loader: () => import('./Pages/Standalone/NotFoundDedicated'),
   loading: Loading,
 });
+// export const Login = Loadable({
+//   loader: () => import('./Pages/Users/Login'),
+//   loading: Loading,
+// });
 /* ------ TEST LIB ----- */
 export const Testlib = Loadable({
   loader: () => import('./App/Testlib'),
@@ -76,6 +80,6 @@ export const ManageUser = Loadable({
   loading: Loading,
 });
 export const ManageTeam = Loadable({
-  loader: () => import('./TwoFast/Application/Team/ManageTeam'),
+  loader: () => import('./TwoFast/Application/Team/Main/ManageTeam'),
   loading: Loading,
 });
