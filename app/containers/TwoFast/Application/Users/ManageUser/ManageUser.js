@@ -57,7 +57,7 @@ const useStyles = makeStyles({
   },
 });
 
-const ManageUser = () => {
+const ManageUser = (props) => {
   const classes = useStyles();
 
   const [currentUsers, setCurrentUsers] = useState(0);

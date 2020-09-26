@@ -7,7 +7,7 @@ export const AdminLoginStyle = makeStyles({
     marginTop: '10%',
   },
   content: {
-    width: '500px',
+    width: '400px',
     display: 'flex',
     flexDirection: 'column',
     textAlign: 'center',

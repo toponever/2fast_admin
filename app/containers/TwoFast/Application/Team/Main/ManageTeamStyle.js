@@ -4,13 +4,15 @@ export const ManageTeamStyle = makeStyles({
   headerBox: {
     display: 'flex',
     alignItems: 'center',
-    padding: 20,
+    paddingTop: '20px',
+    paddingLeft: '20px',
+    paddingRight: '20px',
   },
   divText: {
     marginRight: '15px',
   },
   headerText: {
-    fontSize: '1.9rem',
+    fontSize: '1.4rem',
     margin: 0,
     textShadow: '0px 0px 1px black',
   },

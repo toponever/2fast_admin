@@ -1,5 +1,6 @@
 /* eslint-disable */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 // import { makeStyles } from '@material-ui/core/styles';
 import { AdminLoginStyle } from './AdminLoginStyle';
 import Logo from '../../../../api/images/2fast.png';
@@ -11,10 +12,44 @@ import Input from '@material-ui/core/Input';
 import Button from '@material-ui/core/Button';
 
 import { Controller, useForm } from 'react-hook-form';
+import * as auth from '../../services/Auth';
+import * as api from '../../services/api';
 
-const AdminLogin = () => {
+const AdminLogin = (props) => {
   const classes = AdminLoginStyle();
-  const { register, errors, control, handleSubmit } = useForm();
+
+  const [LoginError, setLoginError] = useState(false);
+
+  const { errors, control, handleSubmit } = useForm({
+    defaultValues: {
+      username: '',
+      password: '',
+    },
+  });
+
+  const Login = (data) => {
+    const config = api.ADMIN_LOGIN(data);
+    setLoginError(false);
+    axios(config)
+      .then((res) => {
+        auth.createKey(res.data.token);
+        props.history.push('/app/manage-user');
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoginError(true);
+      });
+  };
+
+  // ------ if admin back to login url --------
+  useEffect(() => {
+    auth.keyStatus() && auth.delKey();
+  }, []);
+
+  const loginError = (
+    <span style={{ color: 'red' }}>Invalid username or password</span>
+  );
+
   return (
     <div>
       <div className={classes.page}>
@@ -25,7 +60,7 @@ const AdminLogin = () => {
           <div className={classes.actionContent}>
             <form
               onSubmit={handleSubmit((data) => {
-                console.log(data);
+                Login(data);
               })}
               className={classes.form}
             >
@@ -34,6 +69,7 @@ const AdminLogin = () => {
                 <Controller
                   as={Input}
                   name="username"
+                  type="text"
                   control={control}
                   rules={{
                     required: true,
@@ -69,6 +105,7 @@ const AdminLogin = () => {
                     'Password is required'}
                 </span>
               </FormControl>
+              {LoginError && loginError}
               <div className={classes.buttonBox}>
                 <Button
                   variant="outlined"

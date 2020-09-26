@@ -5,7 +5,9 @@ import Auth from './Auth';
 import AdminLogin from '../TwoFast/Login/Admin/AdminLogin';
 import Application from './Application';
 import ThemeWrapper, { AppContext } from './ThemeWrapper';
+import Validate from '../TwoFast/services/Validate';
 window.__MUI_USE_NEXT_TYPOGRAPHY_VARIANTS__ = true;
+
 
 class App extends React.Component {
   render() {
@@ -16,12 +18,14 @@ class App extends React.Component {
             <Switch>
               {/* <Route path="/" exact component={LoginDedicated} /> */}
               <Route path="/" exact component={AdminLogin} />
-              <Route
-                path="/app"
-                render={(props) => (
-                  <Application {...props} changeMode={changeMode} />
-                )}
-              />
+              <Validate>
+                <Route
+                  path="/app"
+                  render={(props) => (
+                    <Application {...props} changeMode={changeMode} />
+                  )}
+                />
+              </Validate>
               <Route component={Auth} />
             </Switch>
           )}

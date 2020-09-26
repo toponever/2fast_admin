@@ -1,3 +1,4 @@
+/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -31,6 +32,9 @@ import styles from './header-jss';
 
 // 2fast logo
 import logo from '../../api/images/2fast.png';
+// 2fast function
+import * as auth from '../../containers/TwoFast/services/Auth';
+// const key = keyStatus();
 
 const elem = document.documentElement;
 
@@ -40,6 +44,7 @@ class Header extends React.Component {
     fullScreen: false,
     turnDarker: false,
     showTitle: false,
+    key: auth.keyStatus(),
   };
 
   // Initial header style
@@ -249,7 +254,23 @@ class Header extends React.Component {
           </Hidden>
           <div className={classes.userToolbar}>
             {/* <SelectLanguage /> */}
-            {isLogin ? (
+            {/* {console.log(this.state.key)} */}
+            {this.state.key && (
+              <Button
+                variant="contained"
+                color="primary"
+                startIcon={<AccountCircle />}
+                onClick={() => {
+                  // console.log(this.props);
+                  auth.delKey();
+                  this.props.history.push('/');
+                  // history.push('/');
+                }}
+              >
+                LOG OUT
+              </Button>
+            )}
+            {/* {isLogin ? (
               <UserMenu signOut={signOut} avatar={avatar} />
             ) : (
               <Button
@@ -262,7 +283,7 @@ class Header extends React.Component {
                 <AccountCircle />
                 <FormattedMessage {...messages.login} />
               </Button>
-            )}
+            )} */}
           </div>
         </Toolbar>
       </AppBar>
