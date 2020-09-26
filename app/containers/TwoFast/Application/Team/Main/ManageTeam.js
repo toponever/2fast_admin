@@ -4,18 +4,21 @@ import { Switch, Route, useHistory, useLocation } from 'react-router-dom';
 import { Controller, useForm } from 'react-hook-form';
 import { ManageTeamStyle } from './ManageTeamStyle';
 
-import Grid from '@material-ui/core/Grid';
-import Dialog from '@material-ui/core/Dialog';
-import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
+import axios from 'axios';
+import * as api from '../../../services/api';
 
-import Tooltip from '@material-ui/core/Tooltip';
-import Fab from '@material-ui/core/Fab';
-import Add from '@material-ui/icons/Add';
-
-import FormControl from '@material-ui/core/FormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import Input from '@material-ui/core/Input';
+import {
+  Grid,
+  Dialog,
+  Paper,
+  Button,
+  FormControl,
+  InputLabel,
+  Input,
+  Tooltip,
+  Fab,
+  Add,
+} from '@material-ui/core';
 
 import CardInfo from '../CardInfo/CardInfo';
 
@@ -24,11 +27,15 @@ const useStyles = ManageTeamStyle;
 const ManageTeam = (props) => {
   const classes = useStyles();
   const history = useHistory();
-  const location = useLocation();
 
-  const { handleSubmit, errors, control } = useForm();
+  const { handleSubmit, errors, control } = useForm({
+    defaultValues: {
+      teamname: '',
+    },
+  });
 
   const [newTeam, setNewTeam] = useState(false);
+  const [teamData, setTeamData] = useState([]);
 
   const popNewTeam = () => {
     setNewTeam(true);
@@ -37,24 +44,47 @@ const ManageTeam = (props) => {
     setNewTeam(false);
   };
 
+  const createNewTeamHandler = (data) => {
+    const token = localStorage.getItem('token');
+    const config = api.CREATE_NEW_TEAM(token, data);
+    axios(config).then((res) => {
+      console.log(res);
+    });
+  };
+
   const teamDetailHandler = () => {
     const url = history.location.pathname + '/hey';
     history.push(url);
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const config = api.MANAGE_TEAM_GET_TEAMLIST(token);
+    axios(config)
+      .then((res) => {
+        console.log(res);
+        setTeamData(res.data.message);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const AddNewTeam = (
     <Dialog
       open={newTeam}
       maxWidth="xs"
       fullWidth={true}
-      // onClose={closeNewteam}
+      scroll="paper"
+      disableScrollLock={false}
       //   keepMounted
+      // onClose={closeNewteam}
     >
       <div className={classes.dialogTextHeaderBox}>
         <p className={classes.dialogTextHeader}>Create New Team</p>
       </div>
       <div className={classes.divForm}>
-        <form onSubmit={handleSubmit((data) => console.log(data))}>
+        <form onSubmit={handleSubmit((data) => createNewTeamHandler(data))}>
           <FormControl style={{ width: '70%' }}>
             <InputLabel style={{ fontSize: '13px' }}>Team name</InputLabel>
             <Controller
@@ -96,11 +126,6 @@ const ManageTeam = (props) => {
     </Dialog>
   );
 
-  useEffect(() => {
-    console.log(history);
-    // console.log(location);
-  }, []);
-
   const testData = {
     name: 'puk',
     god: 'naphat',
@@ -131,7 +156,7 @@ const ManageTeam = (props) => {
             </Tooltip>
             </div> */}
           </div>
-          <CardInfo />
+          <CardInfo addnewteam={popNewTeam} data={teamData}/>
         </Paper>
       </Route>
     </Switch>

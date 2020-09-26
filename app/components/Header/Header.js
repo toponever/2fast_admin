@@ -254,17 +254,14 @@ class Header extends React.Component {
           </Hidden>
           <div className={classes.userToolbar}>
             {/* <SelectLanguage /> */}
-            {/* {console.log(this.state.key)} */}
             {this.state.key && (
               <Button
                 variant="contained"
                 color="primary"
                 startIcon={<AccountCircle />}
                 onClick={() => {
-                  // console.log(this.props);
                   auth.delKey();
                   this.props.history.push('/');
-                  // history.push('/');
                 }}
               >
                 LOG OUT

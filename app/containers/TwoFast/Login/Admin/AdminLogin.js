@@ -33,10 +33,10 @@ const AdminLogin = (props) => {
     axios(config)
       .then((res) => {
         auth.createKey(res.data.token);
-        props.history.push('/app/manage-user');
+        props.history.push('/app/manage-team');
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         setLoginError(true);
       });
   };

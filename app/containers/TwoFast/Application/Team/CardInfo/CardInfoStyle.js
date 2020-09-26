@@ -12,6 +12,36 @@ export const CardInfoStyle = makeStyles({
     padding: 10,
     cursor: 'pointer',
   },
+  // ------------------------------ Add new team ---------------------------- //
+  buttonBase: {
+    width: '100%',
+    height: '100%',
+  },
+  newteamCard: {
+    width: '100%',
+    height: '100%',
+    padding: 10,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+  },
+  newteamContent: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  newteamAddIcon: {
+    fontSize: '4rem',
+    color: '#4dabf5',
+  },
+  newteamText: {
+    margin: 0,
+    paddingLeft: '7px',
+    fontSize: '1.2rem',
+  },
+
+  // ------------------------------ TeamCard ---------------------------- //
   topCard: {
     display: 'flex',
     flexDirection: 'row',
