@@ -83,3 +83,7 @@ export const ManageTeam = Loadable({
   loader: () => import('./TwoFast/Application/Team/Main/ManageTeam'),
   loading: Loading,
 });
+export const UserDetail = Loadable({
+  loader: () => import('./TwoFast/Application/Users/ManageUser/UserDetail/UserDetail'),
+  loading: Loading,
+});

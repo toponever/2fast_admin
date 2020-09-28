@@ -1,13 +1,13 @@
 /* eslint-disable */
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/styles';
+import axios from 'axios';
+import { BrowserRouter, Switch, Route, Router } from 'react-router-dom';
+
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
-// import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import PersonAdd from '@material-ui/icons/PersonAdd';
-// import IconButton from '@material-ui/core/IconButton';
-// import CloseIcon from '@material-ui/icons/Close';
 
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
@@ -15,15 +15,12 @@ import MuiAlert from '@material-ui/lab/Alert';
 import UserList from './Userlist/UserList';
 import UserDataTable from './UserDataTable';
 import CreateUser from './CreateUser/CreateUser';
-// import CreateDone from './CreateUser/CreateDone';
 
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import CreateDone from './CreateUser/CreateDone';
+
+import * as api from '../../../services/api';
+import UserDetail from './UserDetail/UserDetail';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="down" ref={ref} {...props} />;
@@ -33,45 +30,39 @@ function Alert(props) {
   return <MuiAlert elevation={6} variant="filled" {...props} />;
 }
 
-const useStyles = makeStyles({
-  headerBox: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    width: '100%',
-    paddingBottom: '15px',
-  },
-  userlistText: {
-    marginLeft: '21px',
-    marginTop: '7px',
-    fontWeight: 'bold',
-    fontSize: '1.3rem',
-  },
-  contentPaper: {
-    width: '100%',
-    paddingTop: '20px',
-    paddingBottom: '20px',
-  },
-  dataTableBox: {
-    width: '100%',
-    paddingTop: '14px',
-  },
-});
-
 const ManageUser = (props) => {
   const classes = useStyles();
 
+  const [userData, setUserData] = useState([]);
   const [currentUsers, setCurrentUsers] = useState(0);
   const usersCount = {
-    MAX_USERS: 5,
+    MAX_USERS: 100,
     currentUsers: currentUsers,
   };
 
-  const [userData, setUserData] = useState({ username: '', password: '' });
+  const [newUserData, setNewUserData] = useState({
+    username: '',
+    password: '',
+  });
   const [newUserModal, setNewUserModal] = useState(false);
   const [nextStepStatus, setnextStepStatus] = useState(false);
   const [completeAlert, setCompleteAlert] = useState(false);
   const [userDataStack, setUserDataStack] = useState([]);
   const [userMenu, setUsermenu] = useState(null);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    const config = api.GetUserList(token);
+    axios(config)
+      .then((res) => {
+        // console.log(res.data.message);
+        setUserData(res.data.message);
+        setCurrentUsers(res.data.message.length);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const newUserPopModal = () => {
     setNewUserModal(true);
@@ -102,12 +93,11 @@ const ManageUser = (props) => {
   };
 
   const userInformation = (username, password) => {
-    setUserData({ username: username, password: password });
+    setNewUserData({ username: username, password: password });
     if (username && password != '') {
       // setCompleteAlert(true);
       setNewUserModal(false);
       setnextStepStatus(true);
-      setCurrentUsers((state) => state + 1);
       setUserDataStack((state) => {
         const data = [...state];
         data.push({
@@ -153,11 +143,11 @@ const ManageUser = (props) => {
     </Snackbar>
   );
 
-  useEffect(() => {
-    console.log(userDataStack);
-    console.log(usersCount);
-    // console.log(nextStepStatus);
-  }, [userDataStack, currentUsers]);
+  // useEffect(() => {
+  //   console.log(userDataStack);
+  //   console.log(usersCount);
+  //   // console.log(nextStepStatus);
+  // }, [userDataStack, currentUsers]);
 
   let nextStepModal = null;
   if (nextStepStatus) {
@@ -184,7 +174,7 @@ const ManageUser = (props) => {
         </div>
         <Paper elevation={1} className={classes.contentPaper}>
           <Grid container justify="center">
-            <UserList />
+            <UserList data={userData} />
           </Grid>
         </Paper>
         <div className={classes.dataTableBox}>
@@ -199,5 +189,29 @@ const ManageUser = (props) => {
     </div>
   );
 };
+
+const useStyles = makeStyles({
+  headerBox: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: '100%',
+    paddingBottom: '15px',
+  },
+  userlistText: {
+    marginLeft: '21px',
+    marginTop: '7px',
+    fontWeight: 'bold',
+    fontSize: '1.3rem',
+  },
+  contentPaper: {
+    width: '100%',
+    paddingTop: '20px',
+    paddingBottom: '20px',
+  },
+  dataTableBox: {
+    width: '100%',
+    paddingTop: '14px',
+  },
+});
 
 export default ManageUser;

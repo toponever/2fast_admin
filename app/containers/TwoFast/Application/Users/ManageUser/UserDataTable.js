@@ -86,6 +86,7 @@ const UserDataTable = (props) => {
           open={Boolean(userStatus)}
           onClose={closeMenu}
           elevation={1}
+          // disableScrollLock={true}
         >
           <MenuItem onClick={closeMenu}>Edit Profile</MenuItem>
           <MenuItem onClick={closeMenu}>Move</MenuItem>

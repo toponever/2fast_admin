@@ -14,7 +14,7 @@ const CardInfo = (props) => {
   // const history = useHistory();
   const classes = CardInfoStyle();
 
-  console.log(history);
+  // console.log(history);
 
   const addNewTeam = (
     <Grid item xs={4}>
