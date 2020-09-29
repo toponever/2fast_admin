@@ -7,7 +7,11 @@ import AvatarGroup from '@material-ui/lab/AvatarGroup';
 import Avatar from 'react-avatar';
 
 import { Paper, Grid, ButtonBase } from '@material-ui/core';
-import { AddCircleOutlineOutlined, AddCircle } from '@material-ui/icons';
+import {
+  AddCircleOutlineOutlined,
+  AddCircle,
+  CheckCircleRounded,
+} from '@material-ui/icons';
 
 const CardInfo = (props) => {
   const { addnewteam, data } = props;
@@ -17,7 +21,7 @@ const CardInfo = (props) => {
   // console.log(history);
 
   const addNewTeam = (
-    <Grid item xs={4}>
+    <Grid item xs={3}>
       <ButtonBase className={classes.buttonBase} onClick={addnewteam}>
         <Paper elevation={1} className={classes.newteamCard}>
           <div className={classes.card}>
@@ -39,7 +43,7 @@ const CardInfo = (props) => {
         {data.map((key) => (
           <Grid
             item
-            xs={4}
+            xs={3}
             key={key.team_id}
             onClick={() => {
               console.log(key.team_name);
@@ -51,26 +55,23 @@ const CardInfo = (props) => {
                 <div className={classes.topCard}>
                   <div className={classes.teamLogo} />
                   <div className={classes.teamName}>{key.team_name}</div>
+                  <div className={classes.activeIconBox}>
+                    <CheckCircleRounded className={classes.activeIcon} />
+                  </div>
                 </div>
                 <div className={classes.bottomCard}>
                   <AvatarGroup
-                    max={7}
+                    max={4}
                     className={classes.teamNameAvatar}
-                    spacing={-3}
+                    spacing={8}
                   >
-                    <Avatar
-                      name="Kfdsa Tfdsafs"
-                      size="38"
-                      style={{ color: 'blue' }}
-                      round={true}
-                    />
-                    <Avatar name="Pdf Pfdsa" size="38" round={true} />
-                    <Avatar name="Pfdsa Rfdas" size="38" round={true} />
-                    <Avatar name="Nfdsa Kfdsa" size="38" round={true} />
-                    <Avatar name="Pdf Pfdsa" size="38" round={true} />
-                    <Avatar name="Pfdsa Rfdas" size="38" round={true} />
-                    <Avatar name="Nfdsa Kfdsa" size="38" round={true} />
-                    <Avatar name="Sfdsa Sfdsa" size="38" round={true} />
+                    <Avatar name="Pdf Pfdsa" size="35" round={true} />
+                    <Avatar name="Pfdsa Rfdas" size="35" round={true} />
+                    <Avatar name="Nfdsa Kfdsa" size="35" round={true} />
+                    <Avatar name="Pdf Pfdsa" size="35" round={true} />
+                    <Avatar name="Pfdsa Rfdas" size="35" round={true} />
+                    <Avatar name="Nfdsa Kfdsa" size="35" round={true} />
+                    <Avatar name="Sfdsa Sfdsa" size="35" round={true} />
                   </AvatarGroup>
                 </div>
               </div>

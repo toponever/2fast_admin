@@ -6,7 +6,8 @@ export const CardInfoStyle = makeStyles({
     fontFamily: 'Prompt',
   },
   paperCard: {
-    borderRadius: '20px',
+    borderRadius: '8px',
+    height: '100%',
   },
   card: {
     padding: 10,
@@ -24,6 +25,10 @@ export const CardInfoStyle = makeStyles({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
+    border: '0.13rem solid',
+    borderStyle: 'dashed',
+    borderColor: '#4dabf5',
+    // background: '#fbfbfb',
   },
   newteamContent: {
     display: 'flex',
@@ -56,15 +61,26 @@ export const CardInfoStyle = makeStyles({
     boxShadow: '0px 0px 3px #ababab',
   },
   teamName: {
-    width: '64%',
-    alignSelf: 'center',
+    width: '100%',
+    // alignSelf: 'center',
     fontSize: '1.1rem',
     paddingLeft: '10px',
     fontWeight: 'bold',
   },
+  activeIconBox: {
+    // width: '100%',
+    textAlign: 'end',
+  },
+  activeIcon: {
+    color: '#4dc17b',
+    position: 'relative',
+    left: '13px',
+    bottom: '10px',
+    fontSize: '30px',
+  },
   bottomCard: {
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     marginTop: '8px',
   },
 });

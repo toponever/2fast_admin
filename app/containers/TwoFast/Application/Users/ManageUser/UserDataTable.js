@@ -1,15 +1,28 @@
 /* eslint-disable */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import MUIDataTable from 'mui-datatables';
+// import { usePopper } from 'react-popper';
+// import { createPopper } from '@popperjs/core';
+import Avatar from 'react-avatar';
+// import { MDBDataTableV5 } from 'mdbreact';
 import {
   makeStyles,
   createMuiTheme,
   MuiThemeProvider,
 } from '@material-ui/core/styles';
-import MUIDataTable from 'mui-datatables';
-import Avatar from 'react-avatar';
+import {
+  Tooltip,
+  Chip,
+  IconButton,
+  Popper,
+  List,
+  ListItem,
+  Divider,
+} from '@material-ui/core';
+import { MoreHoriz } from '@material-ui/icons';
+
 import Fab from '@material-ui/core/Fab';
 import EditIcon from '@material-ui/icons/Edit';
-import IconButton from '@material-ui/core/IconButton';
 import MoreVert from '@material-ui/icons/MoreVert';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
@@ -17,47 +30,86 @@ import Paper from '@material-ui/core/Paper';
 
 import { userData } from '../dummy-data/dummy-user';
 
-const getMuiTheme = () =>
-  createMuiTheme({
-    overrides: {
-      MuiPaper: {
-        rounded: {
-          borderRadius: '11px',
-        },
-      },
-      MUIDataTable: {
-        root: {
-          backgroundColor: '#FF000',
-        },
-      },
-      MUIDataTableBodyCell: {
-        root: {
-          // backgroundColor: '#FF0000',
-        },
-      },
-      MuiTypography: {
-        root: {},
-        h6: {
-          paddingTop: '27px',
-        },
-      },
-    },
-  });
+// const getMuiTheme = () =>
+//   createMuiTheme({
+//     overrides: {
+//       MuiPaper: {
+//         rounded: {
+//           borderRadius: '11px',
+//         },
+//       },
+//       MuiTableCell: {
+//         root: {
+//           padding: 3,
+//         },
+//       },
+//       MUIDataTable: {
+//         root: {
+//           backgroundColor: '#FF000',
+//         },
+//       },
+//       MUIDataTableBodyCell: {
+//         root: {
+//           // backgroundColor: '#FF0000',
+//         },
+//       },
+//       MuiTypography: {
+//         root: {},
+//         h6: {
+//           paddingTop: '27px',
+//         },
+//       },
+//     },
+//   });
 
-const useStyles = makeStyles({
-  rowName: {},
-  rowLastactive: {},
-  userMenuList: {},
-});
+const useStyles = makeStyles((theme) => ({
+  userAction: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  table: {
+    '& > div': {
+      overflow: 'auto',
+    },
+    '& table': {
+      '& td': {
+        wordBreak: 'keep-all',
+      },
+      // [theme.breakpoints.down('md')]: {
+      //   '& td': {
+      //     height: 60,
+      //     overflow: 'hidden',
+      //     textOverflow: 'ellipsis',
+      //   },
+      // },
+    },
+  },
+}));
 
 const UserDataTable = (props) => {
   const classes = useStyles();
-  const { users, userStatus, popMenu, closeMenu } = props;
+  const { users, userStatus, popMenu, closeMenu, data } = props;
+
+  // const [anchorEl, setAnchorEl] = useState(null);
 
   const tableData = [];
-  userData.map((el) => {
-    tableData.push([el.name, el.role, el.team, el.lastact]);
+  data.map((el) => {
+    tableData.push([el.user_username, null, null, el.user_is_active]);
   });
+
+  const [anchorEl, setAnchorEl] = useState(null);
+  const handleClick = (event) => {    
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+  };
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popper' : undefined;
+  console.log(anchorEl);
+
+  useEffect(() => {
+    console.log(data);
+    console.log(tableData);
+  }, [data]);
 
   const state = {
     columns: [
@@ -68,8 +120,8 @@ const UserDataTable = (props) => {
           customBodyRender: (value) => {
             return (
               <div style={{ display: 'flex', alignItems: 'center' }}>
-                <Avatar name={value} size="35" round={true} />
-                <p style={{ margin: 0, paddingLeft: '12px' }}>{value}</p>
+                {/* <Avatar name={value} size="35" round={true} /> */}
+                <p style={{ margin: 0 /*  paddingLeft: '12px' */ }}>{value}</p>
               </div>
             );
           },
@@ -91,67 +143,40 @@ const UserDataTable = (props) => {
         name: 'Status',
         options: {
           filter: true,
+          customBodyRender: (value) => {
+            if (value) {
+              return (
+                <div className={classes.userAction}>
+                  <Chip
+                    label="Active"
+                    variant="default"
+                    style={{ backgroundColor: '#304ffe', color: 'white' }}
+                  />
+                  <IconButton onClick={handleClick}>
+                    <MoreHoriz />
+                  </IconButton>
+                </div>
+              );
+            } else {
+              return (
+                <div className={classes.userAction}>
+                  <Chip
+                    label="Non active"
+                    variant="default"
+                    style={{ backgroundColor: '#3f51b5', color: 'white' }}
+                  />
+                  {/* <IconButton onClick={handleClick}>
+                    <MoreHoriz />
+                  </IconButton> */}
+                </div>
+              );
+            }
+          },
         },
       },
     ],
     data: tableData,
   };
-
-  // const columns = ['Name', 'Role', 'Team', 'Latest Active'];
-  // const data = [];
-  // userData.map((key) => {
-  //   data.push([
-  //     <div style={{ display: 'flex', alignItems: 'center' }}>
-  //       <div
-  //         style={{
-  //           boxShadow: '0px  0px 2px black',
-  //           borderRadius: '150px',
-  //           boxSizing: 'border-box',
-  //           overflow: 'hidden',
-  //           boxShadow: '0px 0px 3px black',
-  //           marginRight: '11px',
-  //         }}
-  //       >
-  //         <Avatar name={key.name} size="40" round={true} />
-  //       </div>{' '}
-  //       {key.name}
-  //     </div>,
-  //     key.role,
-  //     key.team,
-  //     <div
-  //       style={{
-  //         display: 'flex',
-  //         justifyContent: 'space-between',
-  //         alignItems: 'center',
-  //       }}
-  //     >
-  //       {key.lastact}
-  //       <IconButton
-  //         aria-controls="user-menu"
-  //         aria-haspopup="true"
-  //         onClick={popMenu}
-  //       >
-  //         <MoreVert />
-  //       </IconButton>
-
-        <Menu
-          id="user-menu"
-          anchorEl={userStatus}
-          keepMounted
-          open={Boolean(userStatus)}
-          onClose={closeMenu}
-          elevation={1}
-          // disableScrollLock={true}
-        >
-          <MenuItem onClick={closeMenu}>Edit Profile</MenuItem>
-          <MenuItem onClick={closeMenu}>Move</MenuItem>
-          <MenuItem onClick={closeMenu}>Delete</MenuItem>
-        </Menu>
-  //     </div>,
-  //   ]);
-  // });
-  console.log(userData);
-  console.log(tableData);
 
   const options = {
     filterType: 'dropdown',
@@ -160,21 +185,33 @@ const UserDataTable = (props) => {
     rowsPerPage: 10,
     page: 0,
   };
+
   return (
-    <MuiThemeProvider theme={getMuiTheme()}>
+    <div className={classes.table}>
       <MUIDataTable
         title={
-          'Users Management ( ' +
-          users.currentUsers +
-          ' / ' +
-          users.MAX_USERS +
-          ' )'
+          'User lists ( ' + users.currentUsers + ' / ' + users.MAX_USERS + ' )'
         }
         columns={state.columns}
         data={state.data}
         options={options}
       />
-    </MuiThemeProvider>
+      <Popper
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        placement="left-start"
+        style={{ zIndex: 1000 }}
+      >
+        <Paper elevation={2}>
+          <List component="nav">
+            <ListItem button onClick={handleClick}>Edit user</ListItem>
+            {/* <Divider /> */}
+            <ListItem button>None</ListItem>
+          </List>
+        </Paper>
+      </Popper>
+    </div>
   );
 };
 

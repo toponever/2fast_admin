@@ -48,7 +48,7 @@ const ManageUser = (props) => {
   const [nextStepStatus, setnextStepStatus] = useState(false);
   const [completeAlert, setCompleteAlert] = useState(false);
   const [userDataStack, setUserDataStack] = useState([]);
-  const [userMenu, setUsermenu] = useState(null);
+  
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -84,6 +84,7 @@ const ManageUser = (props) => {
     setCompleteAlert(false);
   };
 
+  const [userMenu, setUsermenu] = useState(null);
   const userMenuPop = (event) => {
     setUsermenu(event.currentTarget);
   };
@@ -172,15 +173,16 @@ const ManageUser = (props) => {
             Create User
           </Button>
         </div>
-        <Paper elevation={3} className={classes.contentPaper}>
+        {/* <Paper elevation={3} className={classes.contentPaper}>
           <Grid container justify="center">
             <UserList data={userData} />
           </Grid>
-        </Paper>
+        </Paper> */}
         <div className={classes.dataTableBox}>
           <UserDataTable
             users={usersCount}
             userStatus={userMenu}
+            data={userData}
             popMenu={userMenuPop}
             closeMenu={userMenuClose}
           />
