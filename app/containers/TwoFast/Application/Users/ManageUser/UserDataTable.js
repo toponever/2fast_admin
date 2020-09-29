@@ -20,16 +20,27 @@ import { userData } from '../dummy-data/dummy-user';
 const getMuiTheme = () =>
   createMuiTheme({
     overrides: {
-      // MUIDataTable: {
-      //   root: {
-      //     backgroundColor: '#FF000',
-      //   },
-      // },
-      // MUIDataTableBodyCell: {
-      //   root: {
-      //     backgroundColor: '#FF0000',
-      //   },
-      // },
+      MuiPaper: {
+        rounded: {
+          borderRadius: '11px',
+        },
+      },
+      MUIDataTable: {
+        root: {
+          backgroundColor: '#FF000',
+        },
+      },
+      MUIDataTableBodyCell: {
+        root: {
+          // backgroundColor: '#FF0000',
+        },
+      },
+      MuiTypography: {
+        root: {},
+        h6: {
+          paddingTop: '27px',
+        },
+      },
     },
   });
 
@@ -42,42 +53,86 @@ const useStyles = makeStyles({
 const UserDataTable = (props) => {
   const classes = useStyles();
   const { users, userStatus, popMenu, closeMenu } = props;
-  const columns = ['Name', 'Role', 'Team', 'Latest Active'];
-  const data = [];
-  userData.map((key) => {
-    data.push([
-      <div style={{ display: 'flex', alignItems: 'center' }}>
-        <div
-          style={{
-            boxShadow: '0px  0px 2px black',
-            borderRadius: '150px',
-            boxSizing: 'border-box',
-            overflow: 'hidden',
-            boxShadow: '0px 0px 3px black',
-            marginRight: '11px',
-          }}
-        >
-          <Avatar name={key.name} size="50" round={true} />
-        </div>{' '}
-        {key.name}
-      </div>,
-      key.role,
-      key.team,
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
-        }}
-      >
-        {key.lastact}
-        <IconButton
-          aria-controls="user-menu"
-          aria-haspopup="true"
-          onClick={popMenu}
-        >
-          <MoreVert />
-        </IconButton>
+
+  const tableData = [];
+  userData.map((el) => {
+    tableData.push([el.name, el.role, el.team, el.lastact]);
+  });
+
+  const state = {
+    columns: [
+      {
+        name: 'Name',
+        options: {
+          filter: true,
+          customBodyRender: (value) => {
+            return (
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <Avatar name={value} size="35" round={true} />
+                <p style={{ margin: 0, paddingLeft: '12px' }}>{value}</p>
+              </div>
+            );
+          },
+        },
+      },
+      {
+        name: 'Role',
+        options: {
+          filter: true,
+        },
+      },
+      {
+        name: 'Team',
+        options: {
+          filter: true,
+        },
+      },
+      {
+        name: 'Status',
+        options: {
+          filter: true,
+        },
+      },
+    ],
+    data: tableData,
+  };
+
+  // const columns = ['Name', 'Role', 'Team', 'Latest Active'];
+  // const data = [];
+  // userData.map((key) => {
+  //   data.push([
+  //     <div style={{ display: 'flex', alignItems: 'center' }}>
+  //       <div
+  //         style={{
+  //           boxShadow: '0px  0px 2px black',
+  //           borderRadius: '150px',
+  //           boxSizing: 'border-box',
+  //           overflow: 'hidden',
+  //           boxShadow: '0px 0px 3px black',
+  //           marginRight: '11px',
+  //         }}
+  //       >
+  //         <Avatar name={key.name} size="40" round={true} />
+  //       </div>{' '}
+  //       {key.name}
+  //     </div>,
+  //     key.role,
+  //     key.team,
+  //     <div
+  //       style={{
+  //         display: 'flex',
+  //         justifyContent: 'space-between',
+  //         alignItems: 'center',
+  //       }}
+  //     >
+  //       {key.lastact}
+  //       <IconButton
+  //         aria-controls="user-menu"
+  //         aria-haspopup="true"
+  //         onClick={popMenu}
+  //       >
+  //         <MoreVert />
+  //       </IconButton>
 
         <Menu
           id="user-menu"
@@ -92,28 +147,31 @@ const UserDataTable = (props) => {
           <MenuItem onClick={closeMenu}>Move</MenuItem>
           <MenuItem onClick={closeMenu}>Delete</MenuItem>
         </Menu>
-      </div>,
-    ]);
-  });
-  // console.log(userData);
-  // console.log(data);
+  //     </div>,
+  //   ]);
+  // });
+  console.log(userData);
+  console.log(tableData);
 
   const options = {
-    filterType: 'checkbox',
+    filterType: 'dropdown',
+    responsive: 'stacked',
     print: false,
+    rowsPerPage: 10,
+    page: 0,
   };
   return (
     <MuiThemeProvider theme={getMuiTheme()}>
       <MUIDataTable
         title={
-          'Users Management  ( ' +
+          'Users Management ( ' +
           users.currentUsers +
           ' / ' +
           users.MAX_USERS +
           ' )'
         }
-        data={data}
-        columns={columns}
+        columns={state.columns}
+        data={state.data}
         options={options}
       />
     </MuiThemeProvider>

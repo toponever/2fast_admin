@@ -22,7 +22,7 @@ function Alert(props) {
 }
 
 const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="down" ref={ref} {...props} />;
+  return <Slide direction="" ref={ref} {...props} />;
 });
 
 const useStyles = makeStyles({
@@ -115,8 +115,8 @@ const CreateUser = (props) => {
   createUserDialog = (
     <Dialog
       open={opened}
-      onClose={handleClose}
-      TransitionComponent={Transition}
+      // onClose={handleClose}
+      // TransitionComponent={Transition}
       // keepMounted
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"

@@ -20,19 +20,20 @@ const UserList = (props) => {
 
   const pushDataNewPage = (key) => {
     history.push({
-      pathname: '/app/manage-user/'+ key.user_username,
-      data: key // your data array of objects
-    })
+      pathname: '/app/manage-user/' + key.user_username,
+      data: key, // your data array of objects
+    });
     // console.log(key);
     // console.log(currentLocation);
     // history.push(currentLocation + '/' + key.user_username);
-  }
+  };
   useEffect(() => {
     console.log(props);
   }, []);
 
   return (
     <div className={classes.div}>
+      <p style={{ fontSize: '20px' }}>User Recent Create</p>
       <Grid
         container
         spacing={3}

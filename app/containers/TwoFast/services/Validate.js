@@ -16,7 +16,8 @@ const Verify = (props) => {
         }}
       />
     );
-  } else {
+  } 
+  else {
     return <Redirect to="/" />;
   }
 };

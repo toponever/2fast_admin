@@ -162,17 +162,17 @@ const ManageUser = (props) => {
       {maxUsersAlert}
       <Grid container direction="row">
         <div className={classes.headerBox}>
-          <p className={classes.userlistText}>User Recent Create</p>
+          {/* <p className={classes.userlistText}>User Recent Create</p> */}
           <Button
             variant="outlined"
             color="primary"
-            onClick={currentUsers < 5 ? newUserPopModal : popAlert}
+            onClick={currentUsers < usersCount.MAX_USERS ? newUserPopModal : popAlert}
             startIcon={<PersonAdd />}
           >
             Create User
           </Button>
         </div>
-        <Paper elevation={1} className={classes.contentPaper}>
+        <Paper elevation={3} className={classes.contentPaper}>
           <Grid container justify="center">
             <UserList data={userData} />
           </Grid>
