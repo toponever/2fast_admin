@@ -35,7 +35,7 @@ export const MANAGE_TEAM_GET_TEAMLIST = (token) => {
   };
 };
 
-export const CREATE_NEW_TEAM = (token, data) => {
+export const CREATE_NEW_TEAM = (token, dataTeam) => {
   return {
     method: 'post',
     url: 'http://www.2fast.online:5000/api/v2/team',
@@ -43,6 +43,6 @@ export const CREATE_NEW_TEAM = (token, data) => {
       Authorization: 'Bearer ' + token,
       'Content-Type': 'application/json',
     },
-    data: { team_name: data },
+    data: dataTeam
   };
 };

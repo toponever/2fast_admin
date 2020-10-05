@@ -49,7 +49,8 @@ const ManageTeam = (props) => {
     const config = api.CREATE_NEW_TEAM(token, data);
     axios(config).then((res) => {
       console.log(res);
-    });
+    })
+    .catch( err => console.log(err))
   };
 
   const teamDetailHandler = () => {
@@ -89,7 +90,7 @@ const ManageTeam = (props) => {
             <InputLabel style={{ fontSize: '13px' }}>Team name</InputLabel>
             <Controller
               as={Input}
-              name="teamname"
+              name="team_name"
               control={control}
               rules={{
                 required: true,

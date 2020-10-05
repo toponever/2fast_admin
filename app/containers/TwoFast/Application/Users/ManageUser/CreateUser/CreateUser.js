@@ -115,9 +115,9 @@ const CreateUser = (props) => {
   createUserDialog = (
     <Dialog
       open={opened}
-      // onClose={handleClose}
-      // TransitionComponent={Transition}
-      // keepMounted
+      onClose={handleClose}
+      TransitionComponent={Transition}
+      keepMounted
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
       maxWidth="xs"
